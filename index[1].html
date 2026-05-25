@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Showcase — Landing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #0a0a0f;
+      --paper:  #f5f0e8;
+      --accent: #e8390e;
+      --dim:    #6b6560;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 6vh;
+      overflow: hidden;
+    }
+
+    /* video fills the hero like a poster */
+    .hero__video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.55;
+    }
+
+    /* gradient vignette over the video */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 80%, rgba(10,10,15,.85) 0%, transparent 100%),
+        linear-gradient(to top, var(--ink) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* everything in front of the gradient */
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.6rem;
+      animation: fadeUp .9s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    .hero__eyebrow {
+      font-size: .75rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .hero__title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 12vw, 9rem);
+      line-height: .95;
+      letter-spacing: .02em;
+      color: var(--paper);
+      text-shadow: 0 4px 40px rgba(0,0,0,.6);
+    }
+
+    .hero__title em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .hero__sub {
+      max-width: 44ch;
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: rgba(245,240,232,.65);
+    }
+
+    /* ── CTA BUTTON ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      margin-top: .5rem;
+      padding: .9rem 2.4rem;
+      border: 1.5px solid var(--accent);
+      background: transparent;
+      color: var(--paper);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: color .3s;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      transform: translateX(-101%);
+      transition: transform .35s cubic-bezier(.22,1,.36,1);
+      z-index: 0;
+    }
+
+    .btn:hover::before { transform: translateX(0); }
+    .btn:hover { color: #fff; }
+
+    .btn span, .btn svg { position: relative; z-index: 1; }
+
+    /* ── TICKER ── */
+    .ticker {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: .12em;
+      padding: .45rem 0;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .ticker__track {
+      display: flex;
+      gap: 4rem;
+      white-space: nowrap;
+      animation: ticker 22s linear infinite;
+    }
+
+    .ticker__track span { flex-shrink: 0; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── FALLBACK PLAY BUTTON ── */
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid rgba(245,240,232,.7);
+      background: rgba(10,10,15,.55);
+      color: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: background .25s, border-color .25s, transform .25s;
+    }
+
+    .play-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <video
+      id="heroVideo"
+      class="hero__video"
+      src="/video.mp4"
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="auto"
+    ></video>
+
+    <button id="playBtn" class="play-btn" aria-label="Play video" style="display:none;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+
+    <div class="hero__content">
+      <p class="hero__eyebrow">AI-Generated Experience</p>
+
+      <h1 class="hero__title">
+        The Future<br>is <em>Generated</em>
+      </h1>
+
+      <p class="hero__sub">
+        Explore what artificial intelligence can create — from cinematic video to
+        vivid imagery. This page was built entirely with AI assistance.
+      </p>
+
+      <a href="/content.html" class="btn">
+        <span>Explore AI Gallery</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>AI VIDEO &nbsp;✦&nbsp; AI IMAGERY &nbsp;✦&nbsp; AI ART &nbsp;✦&nbsp; GENERATED WITH CLAUDE &nbsp;✦&nbsp; EXPLORE THE GALLERY</span>
+      <span>AI VIDEO &nbsp;✦&nbsp; AI IMAGERY &nbsp;✦&nbsp; AI ART &nbsp;✦&nbsp; GENERATED WITH CLAUDE &nbsp;✦&nbsp; EXPLORE THE GALLERY</span>
+    </div>
+  </div>
+
+  <script>
+    const video   = document.getElementById('heroVideo');
+    const playBtn = document.getElementById('playBtn');
+
+    const tryPlay = () => {
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.catch(() => {
+          playBtn.style.display = 'flex';
+        });
+      }
+    };
+
+    if (video.readyState >= 2) {
+      tryPlay();
+    } else {
+      video.addEventListener('canplay', tryPlay, { once: true });
+    }
+
+    playBtn.addEventListener('click', () => {
+      video.play();
+      playBtn.style.display = 'none';
+    });
+
+    document.addEventListener('click', () => {
+      if (video.paused) { video.play(); playBtn.style.display = 'none'; }
+    }, { once: true });
+  </script>
+</body>
+</html>
